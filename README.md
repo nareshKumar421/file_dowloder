@@ -1,142 +1,339 @@
-# File Downloader CLI
+# File Downloader CLI 📥
 
-A simple and efficient Python command-line tool to download files (images, videos, documents, etc.) from URLs.
+A professional and beautiful Python command-line tool to download files (images, videos, documents, etc.) from URLs. Built with **Typer** and **Rich** for an amazing CLI experience!
 
-## Features
+## Features ✨
 
-- Download any file type (images, videos, PDFs, etc.)
-- Progress bar showing download status
-- Support for multiple URLs in a single command
-- Custom output directory
-- Custom filename for downloads
-- Automatic filename detection from URL or server headers
-- File size display
-- Overwrite protection
+- 📥 Download any file type (images, videos, PDFs, documents, archives, etc.)
+- 🎨 Beautiful progress bars with transfer speed and ETA
+- 📊 Rich colored output for better readability
+- 🔄 Support for multiple URLs in a single command
+- 📁 Custom output directory
+- ✏️ Custom filename for downloads
+- 🔍 Automatic filename detection from URL or server headers
+- 📈 File size display in human-readable format
+- 🛡️ File overwrite protection with confirmation
+- ⚡ Force mode for automation
+- 🤫 Quiet mode for minimal output
+- 📋 Summary table for multiple downloads
+- 🎯 Professional error handling with colored messages
+- 📚 Built-in help and documentation
+- ℹ️ Version and info commands
 
 ## Installation
 
-1. Clone this repository or download the files
+### 1. Clone the Repository
 
-2. Install dependencies:
+```bash
+git clone https://github.com/nareshKumar421/file_dowloder.git
+cd file_dowloder
+```
+
+### 2. Install Dependencies
+
 ```bash
 pip install -r requirements.txt
 ```
 
 Or install manually:
 ```bash
-pip install requests tqdm
+pip install requests typer rich
 ```
 
-3. Make the script executable (optional, for Unix/Linux/Mac):
+### 3. Make it Executable (Optional, for Unix/Linux/Mac)
+
 ```bash
 chmod +x downloader.py
 ```
 
 ## Usage
 
-### Basic Usage
+### Basic Commands
 
-Download a single file:
+The tool uses a command-based structure. The main command is `download`.
+
+#### Show Help
+
 ```bash
-python downloader.py https://example.com/image.jpg
+python downloader.py --help
+python downloader.py download --help
 ```
 
-### Download with Custom Filename
+#### Download a Single File
 
 ```bash
-python downloader.py https://example.com/video.mp4 -o my_video.mp4
+python downloader.py download https://example.com/image.jpg
 ```
 
-### Download to Custom Directory
+#### Download with Custom Filename
 
 ```bash
-python downloader.py https://example.com/file.pdf -d ./my_downloads
+python downloader.py download https://example.com/video.mp4 -o my_video.mp4
 ```
 
-### Download Multiple Files
+#### Download to Custom Directory
 
 ```bash
-python downloader.py https://example.com/image1.jpg https://example.com/image2.jpg https://example.com/video.mp4
+python downloader.py download https://example.com/file.pdf -d ~/Documents
+```
+
+#### Download Multiple Files
+
+```bash
+python downloader.py download https://example.com/image1.jpg https://example.com/image2.jpg
+```
+
+#### Force Overwrite (No Confirmation)
+
+```bash
+python downloader.py download https://example.com/file.pdf -f
+```
+
+#### Quiet Mode (Minimal Output)
+
+```bash
+python downloader.py download https://example.com/file.pdf -q
+```
+
+### Additional Commands
+
+#### Show Version
+
+```bash
+python downloader.py version
+```
+
+#### Show Tool Information
+
+```bash
+python downloader.py info
 ```
 
 ## Command-Line Options
 
+### Download Command
+
 ```
-usage: downloader.py [-h] [-o OUTPUT] [-d DIRECTORY] urls [urls ...]
+Usage: downloader.py download [OPTIONS] URLS...
 
-Download files from URLs (images, videos, etc.)
+📥 Download files from URLs (images, videos, documents, etc.)
 
-positional arguments:
-  urls                  URL(s) to download
+Arguments:
+  URLS...  URL(s) to download [required]
 
-optional arguments:
-  -h, --help            show this help message and exit
-  -o OUTPUT, --output OUTPUT
-                        Output filename (only works with single URL)
-  -d DIRECTORY, --directory DIRECTORY
-                        Output directory (default: downloads)
+Options:
+  -o, --output TEXT      Output filename (only works with single URL)
+  -d, --directory TEXT   Output directory for downloaded files [default: downloads]
+  -f, --force           Force overwrite existing files without confirmation
+  -q, --quiet           Minimal output mode
+  --help                Show this message and exit
 ```
 
 ## Examples
 
-### Download an image:
+### Example 1: Download an Image
+
 ```bash
-python downloader.py https://example.com/photo.jpg
+python downloader.py download https://example.com/photo.jpg
 ```
 
-### Download a video with custom name:
-```bash
-python downloader.py https://example.com/video.mp4 -o vacation_2024.mp4
+**Output:**
+```
+╭──────────────── 📥 File Downloader ────────────────╮
+│ Output Directory: /path/to/downloads               │
+│ Files to Download: 1                               │
+╰────────────────────────────────────────────────────╯
+
+🔍 Fetching: https://example.com/photo.jpg
+📥 Downloading to: downloads/photo.jpg
+⠋ photo.jpg ━━━━━━━━━━━━━━━━ 100% 1.2 MB 2.5 MB/s 0:00:00
+✓ Successfully downloaded: downloads/photo.jpg
+File size: 1.23 MB
 ```
 
-### Download multiple files:
+### Example 2: Download Multiple Files with Summary
+
 ```bash
-python downloader.py \
-  https://example.com/image1.png \
+python downloader.py download \
+  https://example.com/image1.jpg \
   https://example.com/image2.png \
-  https://example.com/document.pdf
+  https://example.com/video.mp4
 ```
 
-### Download to a specific folder:
+**Output includes a beautiful summary table:**
+```
+───────────────────────── Summary ─────────────────────────
+┏━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Status ┃ URL                     ┃ Saved To             ┃
+┡━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━┩
+│ ✓      │ https://example.com/... │ downloads/image1.jpg │
+│ ✓      │ https://example.com/... │ downloads/image2.png │
+│ ✓      │ https://example.com/... │ downloads/video.mp4  │
+└────────┴─────────────────────────┴──────────────────────┘
+
+✓ Successful: 3 | ✗ Failed: 0
+```
+
+### Example 3: Download with Custom Name and Directory
+
 ```bash
-python downloader.py https://example.com/report.pdf -d ~/Documents/Reports
+python downloader.py download https://example.com/report.pdf \
+  -o monthly_report.pdf \
+  -d ~/Documents/Reports
+```
+
+### Example 4: Force Overwrite for Automation
+
+```bash
+python downloader.py download https://example.com/data.json -f -q
 ```
 
 ## Supported File Types
 
-This tool can download any file type accessible via HTTP/HTTPS, including:
+This tool can download **any file type** accessible via HTTP/HTTPS:
 
-- Images: `.jpg`, `.png`, `.gif`, `.webp`, `.svg`, etc.
-- Videos: `.mp4`, `.avi`, `.mkv`, `.mov`, `.webm`, etc.
-- Audio: `.mp3`, `.wav`, `.flac`, `.m4a`, etc.
-- Documents: `.pdf`, `.doc`, `.docx`, `.txt`, etc.
-- Archives: `.zip`, `.tar`, `.gz`, `.rar`, etc.
-- And any other file type accessible via URL
+- **Images**: `.jpg`, `.png`, `.gif`, `.webp`, `.svg`, `.bmp`, `.ico`
+- **Videos**: `.mp4`, `.avi`, `.mkv`, `.mov`, `.webm`, `.flv`, `.wmv`
+- **Audio**: `.mp3`, `.wav`, `.flac`, `.m4a`, `.ogg`, `.aac`
+- **Documents**: `.pdf`, `.doc`, `.docx`, `.txt`, `.xlsx`, `.pptx`
+- **Archives**: `.zip`, `.tar`, `.gz`, `.rar`, `.7z`
+- **Code**: `.py`, `.js`, `.html`, `.css`, `.json`, `.xml`
+- And many more!
 
 ## Requirements
 
-- Python 3.6 or higher
-- `requests` library
-- `tqdm` library
+- **Python**: 3.7 or higher
+- **Dependencies**:
+  - `requests` - HTTP library for downloading
+  - `typer` - Modern CLI framework
+  - `rich` - Beautiful terminal formatting
+
+## Features in Detail
+
+### 🎨 Beautiful Progress Bars
+
+- Real-time download progress with percentage
+- Transfer speed display (MB/s)
+- Estimated time remaining (ETA)
+- Spinner animation
+- Color-coded status indicators
+
+### 🛡️ Error Handling
+
+The tool gracefully handles various errors:
+
+- **HTTP Errors**: 404, 403, 500, etc.
+- **Connection Errors**: Network issues, DNS failures
+- **Timeout Errors**: Slow or unresponsive servers
+- **Keyboard Interrupt**: Clean cancellation with partial file cleanup
+
+### 📊 Multiple Downloads
+
+When downloading multiple files, you get:
+
+- Individual progress bar for each file
+- Summary table with results
+- Success/failure statistics
+- Proper exit codes for scripts
+
+### 🤖 Automation Friendly
+
+- Force mode (`-f`) bypasses confirmations
+- Quiet mode (`-q`) for minimal output
+- Proper exit codes (0 = success, 1 = failure)
+- Perfect for scripts and automation
+
+## Troubleshooting
+
+### Module Not Found Error
+
+**Problem**: `ModuleNotFoundError: No module named 'typer'`
+
+**Solution**:
+```bash
+pip install -r requirements.txt
+```
+
+### Permission Denied
+
+**Problem**: Cannot write to output directory
+
+**Solution**: Make sure you have write permissions or use a different directory:
+```bash
+python downloader.py download URL -d ~/Downloads
+```
+
+### SSL Certificate Errors
+
+**Problem**: SSL certificate verification failed
+
+**Solution**: Update your certificates:
+```bash
+pip install --upgrade certifi
+```
+
+### 403 Forbidden or 404 Not Found
+
+**Problem**: Server blocks the download or URL doesn't exist
+
+**Solution**:
+- Check if the URL is correct
+- Some servers block automated downloads
+- Try accessing the URL in a browser first
+
+## Development
+
+### Project Structure
+
+```
+file_dowloder/
+├── downloader.py       # Main CLI application
+├── requirements.txt    # Python dependencies
+├── README.md          # This file
+├── TESTING.md         # Testing guide
+├── test_examples.sh   # Test script
+└── .gitignore         # Git ignore rules
+```
+
+### Contributing
+
+Contributions are welcome! Feel free to:
+
+- Report bugs
+- Suggest new features
+- Submit pull requests
+- Improve documentation
 
 ## License
 
 MIT License - Feel free to use and modify as needed.
 
-## Troubleshooting
+## Credits
 
-### Downloads folder not found
-The tool automatically creates a `downloads` folder in the current directory if it doesn't exist.
+Built with:
+- [Typer](https://typer.tiangolo.com/) - Modern CLI framework
+- [Rich](https://rich.readthedocs.io/) - Beautiful terminal formatting
+- [Requests](https://requests.readthedocs.io/) - HTTP library
 
-### File already exists
-If a file with the same name exists, the tool will ask if you want to overwrite it.
+## Changelog
 
-### Network errors
-Make sure you have an active internet connection and the URL is accessible.
+### Version 2.0.0 (Current)
+- ✨ Migrated to Typer framework for professional CLI
+- 🎨 Added Rich library for beautiful output
+- 📊 Added summary tables for multiple downloads
+- ⚡ Added force mode for automation
+- 🤫 Added quiet mode for minimal output
+- ℹ️ Added version and info commands
+- 🎯 Improved error handling with colored messages
+- 📈 Enhanced progress bars with speed and ETA
 
-### Permission errors
-Ensure you have write permissions in the output directory.
+### Version 1.0.0
+- 📥 Basic download functionality
+- 📁 Custom output directory
+- ✏️ Custom filename support
+- 🔄 Multiple URL support
+- 🛡️ Overwrite protection
 
-## Contributing
+---
 
-Feel free to submit issues or pull requests to improve this tool!
+**Made with ❤️ using Python, Typer, and Rich**
