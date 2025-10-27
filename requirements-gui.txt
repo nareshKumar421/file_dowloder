@@ -1,0 +1,8 @@
+# GUI version dependencies
+# Install with: pip install -r requirements-gui.txt
+
+# Include all CLI dependencies
+-r requirements.txt
+
+# Additional GUI dependencies
+customtkinter>=5.2.0

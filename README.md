@@ -1,6 +1,34 @@
-# File Downloader CLI 📥
+# File Downloader 📥
 
-A professional and beautiful Python command-line tool to download files (images, videos, documents, etc.) from URLs. Built with **Typer** and **Rich** for an amazing CLI experience!
+A professional and beautiful file downloader with both **GUI** and **CLI** interfaces! Download files (images, videos, documents, etc.) from URLs with style.
+
+## Two Interfaces Available
+
+### 🖥️ **GUI Version** (NEW!)
+Beautiful, minimal, and professional graphical interface built with **CustomTkinter**
+- Modern dark/light theme
+- Drag and paste URLs
+- Real-time progress bars
+- Batch downloads with visual feedback
+- Perfect for users who prefer graphical interfaces
+
+### 💻 **CLI Version**
+Powerful command-line interface built with **Typer** and **Rich**
+- Terminal-based with beautiful colors
+- Perfect for automation and scripts
+- Ideal for power users and developers
+
+## Which Version Should You Use?
+
+| Feature | GUI Version 🖥️ | CLI Version 💻 |
+|---------|----------------|----------------|
+| **Ease of Use** | ⭐⭐⭐⭐⭐ Beginner friendly | ⭐⭐⭐ Requires terminal knowledge |
+| **Visual Appeal** | ⭐⭐⭐⭐⭐ Modern interface | ⭐⭐⭐⭐ Colored terminal output |
+| **Automation** | ⭐⭐ Manual operation | ⭐⭐⭐⭐⭐ Perfect for scripts |
+| **Batch Downloads** | ⭐⭐⭐⭐⭐ Visual feedback | ⭐⭐⭐⭐ Table summary |
+| **Best For** | Regular users | Developers & power users |
+
+**💡 Tip:** You can install both! Use GUI for daily tasks and CLI for automation.
 
 ## Features ✨
 
@@ -31,22 +59,61 @@ cd file_dowloder
 
 ### 2. Install Dependencies
 
+**For CLI version only:**
 ```bash
 pip install -r requirements.txt
 ```
 
+**For GUI version (includes CLI):**
+```bash
+pip install -r requirements-gui.txt
+```
+
 Or install manually:
 ```bash
+# CLI only
 pip install requests typer rich
+
+# GUI version (add this)
+pip install customtkinter
 ```
 
 ### 3. Make it Executable (Optional, for Unix/Linux/Mac)
 
 ```bash
-chmod +x downloader.py
+chmod +x downloader.py launch_gui.sh
 ```
 
 ## Usage
+
+### 🖥️ GUI Version
+
+Launch the beautiful graphical interface:
+
+**On Windows:**
+```bash
+# Double-click launch_gui.bat
+# OR run in terminal:
+python launch_gui.py
+```
+
+**On Mac/Linux:**
+```bash
+./launch_gui.sh
+# OR
+python3 launch_gui.py
+```
+
+**GUI Features:**
+- **Paste multiple URLs** (one per line) in the text area
+- **Choose download directory** with the Browse button
+- **Toggle dark/light theme** with the theme button
+- **Watch real-time progress** for each download
+- **See beautiful summary** when downloads complete
+
+---
+
+### 💻 CLI Version
 
 ### Basic Commands
 
@@ -287,12 +354,17 @@ pip install --upgrade certifi
 
 ```
 file_dowloder/
-├── downloader.py       # Main CLI application
-├── requirements.txt    # Python dependencies
-├── README.md          # This file
-├── TESTING.md         # Testing guide
-├── test_examples.sh   # Test script
-└── .gitignore         # Git ignore rules
+├── downloader.py          # Main CLI application
+├── downloader_gui.py      # GUI application (NEW!)
+├── launch_gui.py          # GUI launcher script (NEW!)
+├── launch_gui.sh          # Unix/Linux/Mac launcher (NEW!)
+├── launch_gui.bat         # Windows launcher (NEW!)
+├── requirements.txt       # CLI dependencies
+├── requirements-gui.txt   # GUI dependencies (NEW!)
+├── README.md             # This file
+├── TESTING.md            # Testing guide
+├── test_examples.sh      # Test script
+└── .gitignore            # Git ignore rules
 ```
 
 ### Contributing
@@ -311,13 +383,23 @@ MIT License - Feel free to use and modify as needed.
 ## Credits
 
 Built with:
+- [CustomTkinter](https://github.com/TomSchimansky/CustomTkinter) - Modern GUI framework (NEW!)
 - [Typer](https://typer.tiangolo.com/) - Modern CLI framework
 - [Rich](https://rich.readthedocs.io/) - Beautiful terminal formatting
 - [Requests](https://requests.readthedocs.io/) - HTTP library
 
 ## Changelog
 
-### Version 2.0.0 (Current)
+### Version 2.1.0 (Current)
+- 🖥️ **NEW: Beautiful GUI version with CustomTkinter**
+- 🎨 Modern dark/light theme toggle
+- 📥 Multi-URL batch downloads with visual feedback
+- 📊 Real-time progress bars in GUI
+- 🚀 Easy launcher scripts for all platforms
+- 📱 Responsive and professional interface
+- 🎯 Better user experience for non-technical users
+
+### Version 2.0.0
 - ✨ Migrated to Typer framework for professional CLI
 - 🎨 Added Rich library for beautiful output
 - 📊 Added summary tables for multiple downloads
