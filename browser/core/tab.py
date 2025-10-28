@@ -5,8 +5,8 @@ Each tab contains a QtWebEngineView with full HTML5/CSS3/JavaScript support.
 Handles page loading, navigation, events, and communication with the main window.
 """
 
-from PyQt6.QtWebEngineWidgets import QWebEngineView, QWebEnginePage
-from PyQt6.QtWebEngineCore import QWebEngineSettings, QWebEngineProfile
+from PyQt6.QtWebEngineWidgets import QWebEngineView
+from PyQt6.QtWebEngineCore import QWebEngineSettings, QWebEngineProfile, QWebEnginePage
 from PyQt6.QtCore import QUrl, pyqtSignal, QObject
 from PyQt6.QtWidgets import QWidget, QVBoxLayout
 
@@ -208,8 +208,6 @@ class BrowserTab(QWidget):
             text: Text to find
             case_sensitive: Whether search is case sensitive
         """
-        from PyQt6.QtWebEngineCore import QWebEnginePage
-
         flags = QWebEnginePage.FindFlag(0)
         if case_sensitive:
             flags = QWebEnginePage.FindFlag.FindCaseSensitively
