@@ -130,7 +130,8 @@ class BrowserEngine(QObject):
 
     def _configure_global_settings(self):
         """Configure global web engine settings."""
-        settings = QWebEngineSettings.globalSettings()
+        # In PyQt6, use the default profile's settings instead of globalSettings()
+        settings = self.default_profile.settings()
 
         # Set default font
         settings.setFontFamily(QWebEngineSettings.FontFamily.StandardFont, "Arial")
