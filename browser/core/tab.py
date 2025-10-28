@@ -65,6 +65,9 @@ class BrowserTab(QWidget):
         self.history = []
         self.history_index = -1
 
+        # Loading state tracking (for PyQt6 compatibility)
+        self._is_loading = False
+
     def _configure_settings(self):
         """Configure web engine settings for modern web support."""
         settings = self.web_view.settings()
@@ -95,7 +98,7 @@ class BrowserTab(QWidget):
         self.web_view.urlChanged.connect(self._on_url_changed)
         self.web_view.titleChanged.connect(self.title_changed.emit)
         self.web_view.loadProgress.connect(self.loading_progress.emit)
-        self.web_view.loadStarted.connect(self.loading_started.emit)
+        self.web_view.loadStarted.connect(self._on_load_started)
         self.web_view.loadFinished.connect(self._on_load_finished)
         self.web_view.iconChanged.connect(self.icon_changed.emit)
 
@@ -111,8 +114,14 @@ class BrowserTab(QWidget):
         self.history.append(url.toString())
         self.history_index = len(self.history) - 1
 
+    def _on_load_started(self):
+        """Handle page load start."""
+        self._is_loading = True
+        self.loading_started.emit()
+
     def _on_load_finished(self, success):
         """Handle page load completion."""
+        self._is_loading = False
         self.loading_finished.emit(success)
 
     def load(self, url):
@@ -171,7 +180,7 @@ class BrowserTab(QWidget):
 
     def is_loading(self):
         """Check if page is currently loading."""
-        return self.web_view.isLoading()
+        return self._is_loading
 
     def execute_javascript(self, script, callback=None):
         """
