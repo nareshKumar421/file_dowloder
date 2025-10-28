@@ -1,0 +1,24 @@
+# Python Web Browser Requirements
+# Core browser dependencies
+
+# GUI Framework with Web Engine
+PyQt6>=6.6.0
+PyQt6-WebEngine>=6.6.0
+
+# Network and HTTP handling
+requests>=2.31.0
+urllib3>=2.1.0
+
+# HTML/CSS parsing (for additional features)
+beautifulsoup4>=4.12.0
+lxml>=4.9.0
+cssutils>=2.9.0
+
+# JavaScript execution (for custom JS features)
+# PyMiniRacer>=0.6.0  # Optional: for standalone JS execution
+
+# Storage and data management
+cryptography>=41.0.0  # For secure cookie/password storage
+
+# Additional utilities
+python-dateutil>=2.8.0

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to PyBrowser</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 60px;
+            max-width: 800px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+
+        h1 {
+            color: #1e3c72;
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.3em;
+            margin-bottom: 40px;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+            text-align: left;
+        }
+
+        .feature {
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #1e3c72;
+        }
+
+        .feature h3 {
+            color: #1e3c72;
+            margin-bottom: 10px;
+        }
+
+        .feature p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .cta {
+            margin-top: 40px;
+        }
+
+        .cta button {
+            background: #1e3c72;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-size: 18px;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s;
+        }
+
+        .cta button:hover {
+            background: #2a5298;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .shortcuts {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 40px;
+        }
+
+        .shortcuts h2 {
+            color: #1e3c72;
+            margin-bottom: 20px;
+        }
+
+        .shortcuts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            text-align: left;
+        }
+
+        .shortcut {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+        }
+
+        .shortcut-key {
+            background: #1e3c72;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 14px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .container {
+            animation: fadeIn 0.8s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌐 Welcome to PyBrowser!</h1>
+        <p class="subtitle">A fully functional web browser built with Python</p>
+
+        <div class="features">
+            <div class="feature">
+                <h3>⚡ Modern Web Support</h3>
+                <p>Full HTML5, CSS3, and JavaScript ES6+ support</p>
+            </div>
+
+            <div class="feature">
+                <h3>🔧 Developer Tools</h3>
+                <p>Console, inspector, network monitor, and more</p>
+            </div>
+
+            <div class="feature">
+                <h3>🔐 Privacy & Security</h3>
+                <p>Incognito mode, HTTPS enforcement, security indicators</p>
+            </div>
+
+            <div class="feature">
+                <h3>📑 Tabs & Bookmarks</h3>
+                <p>Multi-tab browsing with full bookmark management</p>
+            </div>
+
+            <div class="feature">
+                <h3>💾 Storage APIs</h3>
+                <p>LocalStorage, SessionStorage, and cookie support</p>
+            </div>
+
+            <div class="feature">
+                <h3>🎨 Clean Interface</h3>
+                <p>Modern UI with smooth navigation and controls</p>
+            </div>
+        </div>
+
+        <div class="cta">
+            <button onclick="openTestPage()">🧪 Test All Features</button>
+            <button onclick="openGoogle()">🔍 Browse the Web</button>
+            <button onclick="showDevTools()">🛠️ Open DevTools</button>
+        </div>
+
+        <div class="shortcuts">
+            <h2>⌨️ Keyboard Shortcuts</h2>
+            <div class="shortcuts-grid">
+                <div class="shortcut">
+                    <span>New Tab</span>
+                    <span class="shortcut-key">Ctrl+T</span>
+                </div>
+                <div class="shortcut">
+                    <span>Close Tab</span>
+                    <span class="shortcut-key">Ctrl+W</span>
+                </div>
+                <div class="shortcut">
+                    <span>Reload</span>
+                    <span class="shortcut-key">Ctrl+R</span>
+                </div>
+                <div class="shortcut">
+                    <span>Developer Tools</span>
+                    <span class="shortcut-key">F12</span>
+                </div>
+                <div class="shortcut">
+                    <span>Find in Page</span>
+                    <span class="shortcut-key">Ctrl+F</span>
+                </div>
+                <div class="shortcut">
+                    <span>Bookmark</span>
+                    <span class="shortcut-key">Ctrl+D</span>
+                </div>
+                <div class="shortcut">
+                    <span>History</span>
+                    <span class="shortcut-key">Ctrl+H</span>
+                </div>
+                <div class="shortcut">
+                    <span>Zoom In/Out</span>
+                    <span class="shortcut-key">Ctrl+±</span>
+                </div>
+            </div>
+        </div>
+
+        <p style="margin-top: 40px; color: #999;">
+            Built with ❤️ using Python, PyQt6, and QtWebEngine
+        </p>
+    </div>
+
+    <script>
+        function openTestPage() {
+            window.location.href = 'test_browser.html';
+        }
+
+        function openGoogle() {
+            window.location.href = 'https://www.google.com';
+        }
+
+        function showDevTools() {
+            alert('Press F12 to open Developer Tools!\n\nYou can:\n• Execute JavaScript\n• View console messages\n• Monitor network requests\n• Inspect storage');
+        }
+
+        // Log welcome message
+        console.log('%c Welcome to PyBrowser! ', 'background: #1e3c72; color: white; font-size: 20px; padding: 10px;');
+        console.log('Press F12 to explore developer tools');
+        console.log('Try executing: document.querySelector("h1").style.color = "red"');
+
+        // Store visit in localStorage
+        let visits = parseInt(localStorage.getItem('pybrowser-visits') || '0');
+        visits++;
+        localStorage.setItem('pybrowser-visits', visits.toString());
+        console.log(`This is visit #${visits}`);
+    </script>
+</body>
+</html>

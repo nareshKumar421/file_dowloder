@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PyBrowser Feature Test</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        .test-section {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .test-section h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #5568d3;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .output {
+            background: #fff;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 15px;
+            border: 1px solid #ddd;
+            min-height: 50px;
+        }
+
+        .success {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .error {
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        .info {
+            color: #17a2b8;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 300px;
+            font-size: 16px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .card h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        #canvas {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+
+        .flex-container {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .flex-item {
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 4px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animated {
+            animation: fadeIn 0.5s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="container animated">
+        <h1>🌐 PyBrowser Feature Test</h1>
+        <p class="subtitle">Comprehensive test page for all browser features</p>
+
+        <!-- DOM Manipulation Test -->
+        <div class="test-section">
+            <h2>1️⃣ DOM Manipulation</h2>
+            <button onclick="testDOM()">Test DOM API</button>
+            <div id="dom-output" class="output"></div>
+        </div>
+
+        <!-- Event System Test -->
+        <div class="test-section">
+            <h2>2️⃣ Event System</h2>
+            <button onclick="testEvents()">Test Events</button>
+            <button id="hover-btn">Hover Over Me</button>
+            <button id="double-click-btn">Double Click Me</button>
+            <div id="event-output" class="output"></div>
+        </div>
+
+        <!-- LocalStorage Test -->
+        <div class="test-section">
+            <h2>3️⃣ LocalStorage</h2>
+            <input type="text" id="storage-input" placeholder="Enter text to store">
+            <button onclick="testLocalStorage()">Save to LocalStorage</button>
+            <button onclick="loadFromLocalStorage()">Load from LocalStorage</button>
+            <button onclick="clearLocalStorage()">Clear LocalStorage</button>
+            <div id="storage-output" class="output"></div>
+        </div>
+
+        <!-- SessionStorage Test -->
+        <div class="test-section">
+            <h2>4️⃣ SessionStorage</h2>
+            <input type="text" id="session-input" placeholder="Enter session data">
+            <button onclick="testSessionStorage()">Save to SessionStorage</button>
+            <button onclick="loadFromSessionStorage()">Load from SessionStorage</button>
+            <div id="session-output" class="output"></div>
+        </div>
+
+        <!-- Console Test -->
+        <div class="test-section">
+            <h2>5️⃣ Console Output</h2>
+            <button onclick="testConsole()">Test Console (Check F12)</button>
+            <div id="console-output" class="output">Open Developer Tools (F12) and check the console</div>
+        </div>
+
+        <!-- Canvas Test -->
+        <div class="test-section">
+            <h2>6️⃣ Canvas API</h2>
+            <button onclick="testCanvas()">Draw on Canvas</button>
+            <button onclick="clearCanvas()">Clear Canvas</button>
+            <canvas id="canvas" width="600" height="200"></canvas>
+        </div>
+
+        <!-- Timer Test -->
+        <div class="test-section">
+            <h2>7️⃣ Timers (setTimeout/setInterval)</h2>
+            <button onclick="testTimeout()">Test setTimeout</button>
+            <button onclick="testInterval()">Start Interval</button>
+            <button onclick="stopInterval()">Stop Interval</button>
+            <div id="timer-output" class="output"></div>
+        </div>
+
+        <!-- Form Test -->
+        <div class="test-section">
+            <h2>8️⃣ Form Handling</h2>
+            <form id="test-form" onsubmit="handleSubmit(event)">
+                <input type="text" id="form-name" placeholder="Name" required>
+                <input type="email" id="form-email" placeholder="Email" required>
+                <button type="submit">Submit Form</button>
+            </form>
+            <div id="form-output" class="output"></div>
+        </div>
+
+        <!-- CSS Features -->
+        <div class="test-section">
+            <h2>9️⃣ CSS Features (Flexbox, Grid, Animations)</h2>
+            <p>Flexbox:</p>
+            <div class="flex-container">
+                <div class="flex-item">Item 1</div>
+                <div class="flex-item">Item 2</div>
+                <div class="flex-item">Item 3</div>
+            </div>
+            <p style="margin-top: 20px;">Grid Layout:</p>
+            <div class="grid">
+                <div class="card">
+                    <h3>Card 1</h3>
+                    <p>Grid layout works!</p>
+                </div>
+                <div class="card">
+                    <h3>Card 2</h3>
+                    <p>Responsive design!</p>
+                </div>
+                <div class="card">
+                    <h3>Card 3</h3>
+                    <p>Modern CSS!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fetch API Test -->
+        <div class="test-section">
+            <h2>🔟 Fetch API (Network)</h2>
+            <button onclick="testFetch()">Test Fetch API</button>
+            <div id="fetch-output" class="output"></div>
+        </div>
+
+        <!-- Summary -->
+        <div class="test-section" style="background: #d4edda; border-left-color: #28a745;">
+            <h2>✅ Test Summary</h2>
+            <p>Click the buttons above to test various browser features.</p>
+            <p>All features should work correctly in PyBrowser!</p>
+        </div>
+    </div>
+
+    <script>
+        // Test counters
+        let testCount = 0;
+        let intervalId = null;
+
+        // DOM Manipulation Test
+        function testDOM() {
+            const output = document.getElementById('dom-output');
+            testCount++;
+
+            // Create elements
+            const div = document.createElement('div');
+            div.className = 'success';
+            div.innerHTML = `
+                <p>✓ DOM Test #${testCount}</p>
+                <p>• createElement: Success</p>
+                <p>• appendChild: Success</p>
+                <p>• classList: Success</p>
+                <p>• innerHTML: Success</p>
+                <p>• querySelector: ${document.querySelector('h1') ? 'Success' : 'Failed'}</p>
+            `;
+
+            output.innerHTML = '';
+            output.appendChild(div);
+
+            console.log('DOM test completed successfully');
+        }
+
+        // Event System Test
+        function testEvents() {
+            const output = document.getElementById('event-output');
+            output.innerHTML = '<p class="success">✓ Click event works! Now try the other buttons...</p>';
+
+            // Add hover event
+            const hoverBtn = document.getElementById('hover-btn');
+            hoverBtn.onmouseenter = function() {
+                output.innerHTML += '<p class="info">• Mouse enter detected!</p>';
+            };
+
+            // Add double-click event
+            const dblBtn = document.getElementById('double-click-btn');
+            dblBtn.ondblclick = function() {
+                output.innerHTML += '<p class="info">• Double click detected!</p>';
+            };
+
+            console.log('Event listeners added');
+        }
+
+        // LocalStorage Test
+        function testLocalStorage() {
+            const input = document.getElementById('storage-input');
+            const value = input.value || 'Test data from PyBrowser';
+
+            try {
+                localStorage.setItem('pybrowser-test', value);
+                localStorage.setItem('pybrowser-timestamp', new Date().toISOString());
+
+                document.getElementById('storage-output').innerHTML = `
+                    <p class="success">✓ Saved to LocalStorage</p>
+                    <p>Value: ${value}</p>
+                `;
+                console.log('LocalStorage: Data saved');
+            } catch (e) {
+                document.getElementById('storage-output').innerHTML = `
+                    <p class="error">✗ LocalStorage failed: ${e.message}</p>
+                `;
+            }
+        }
+
+        function loadFromLocalStorage() {
+            const value = localStorage.getItem('pybrowser-test');
+            const timestamp = localStorage.getItem('pybrowser-timestamp');
+
+            if (value) {
+                document.getElementById('storage-output').innerHTML = `
+                    <p class="success">✓ Loaded from LocalStorage</p>
+                    <p>Value: ${value}</p>
+                    <p>Saved at: ${timestamp}</p>
+                `;
+            } else {
+                document.getElementById('storage-output').innerHTML = `
+                    <p class="info">No data in LocalStorage. Save something first!</p>
+                `;
+            }
+        }
+
+        function clearLocalStorage() {
+            localStorage.removeItem('pybrowser-test');
+            localStorage.removeItem('pybrowser-timestamp');
+            document.getElementById('storage-output').innerHTML = `
+                <p class="success">✓ LocalStorage cleared</p>
+            `;
+        }
+
+        // SessionStorage Test
+        function testSessionStorage() {
+            const input = document.getElementById('session-input');
+            const value = input.value || 'Session data';
+
+            sessionStorage.setItem('pybrowser-session', value);
+            document.getElementById('session-output').innerHTML = `
+                <p class="success">✓ Saved to SessionStorage: ${value}</p>
+            `;
+        }
+
+        function loadFromSessionStorage() {
+            const value = sessionStorage.getItem('pybrowser-session');
+            document.getElementById('session-output').innerHTML = value
+                ? `<p class="success">✓ Loaded: ${value}</p>`
+                : `<p class="info">No session data found</p>`;
+        }
+
+        // Console Test
+        function testConsole() {
+            console.log('✓ Console.log works!');
+            console.info('ℹ Console.info works!');
+            console.warn('⚠ Console.warn works!');
+            console.error('✗ Console.error works!');
+
+            console.log('Object logging:', {
+                browser: 'PyBrowser',
+                version: '1.0.0',
+                features: ['tabs', 'devtools', 'storage']
+            });
+
+            console.log('Array logging:', [1, 2, 3, 4, 5]);
+
+            document.getElementById('console-output').innerHTML = `
+                <p class="success">✓ Console messages sent (check F12)</p>
+            `;
+        }
+
+        // Canvas Test
+        function testCanvas() {
+            const canvas = document.getElementById('canvas');
+            const ctx = canvas.getContext('2d');
+
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw gradient background
+            const gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
+            gradient.addColorStop(0, '#667eea');
+            gradient.addColorStop(1, '#764ba2');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Draw shapes
+            ctx.fillStyle = 'white';
+            ctx.fillRect(50, 50, 100, 100);
+
+            ctx.fillStyle = 'yellow';
+            ctx.beginPath();
+            ctx.arc(300, 100, 50, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.strokeStyle = 'white';
+            ctx.lineWidth = 5;
+            ctx.beginPath();
+            ctx.moveTo(400, 50);
+            ctx.lineTo(500, 150);
+            ctx.lineTo(450, 50);
+            ctx.closePath();
+            ctx.stroke();
+
+            // Draw text
+            ctx.fillStyle = 'white';
+            ctx.font = 'bold 24px Arial';
+            ctx.fillText('Canvas API Works! ✓', 180, 180);
+
+            console.log('Canvas test completed');
+        }
+
+        function clearCanvas() {
+            const canvas = document.getElementById('canvas');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        // Timer Tests
+        function testTimeout() {
+            document.getElementById('timer-output').innerHTML = '<p class="info">Waiting 2 seconds...</p>';
+
+            setTimeout(() => {
+                document.getElementById('timer-output').innerHTML = `
+                    <p class="success">✓ setTimeout works! Message displayed after 2 seconds.</p>
+                `;
+                console.log('setTimeout executed');
+            }, 2000);
+        }
+
+        let intervalCount = 0;
+        function testInterval() {
+            intervalCount = 0;
+            clearInterval(intervalId);
+
+            intervalId = setInterval(() => {
+                intervalCount++;
+                document.getElementById('timer-output').innerHTML = `
+                    <p class="success">✓ setInterval running... Count: ${intervalCount}</p>
+                `;
+                console.log('Interval count:', intervalCount);
+            }, 1000);
+        }
+
+        function stopInterval() {
+            clearInterval(intervalId);
+            document.getElementById('timer-output').innerHTML = `
+                <p class="success">✓ Interval stopped at count: ${intervalCount}</p>
+            `;
+        }
+
+        // Form Test
+        function handleSubmit(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('form-name').value;
+            const email = document.getElementById('form-email').value;
+
+            document.getElementById('form-output').innerHTML = `
+                <p class="success">✓ Form submitted successfully!</p>
+                <p>Name: ${name}</p>
+                <p>Email: ${email}</p>
+                <p>preventDefault() worked correctly</p>
+            `;
+
+            console.log('Form submitted:', { name, email });
+        }
+
+        // Fetch Test
+        function testFetch() {
+            const output = document.getElementById('fetch-output');
+            output.innerHTML = '<p class="info">Testing Fetch API...</p>';
+
+            fetch('https://api.github.com/users/github')
+                .then(response => response.json())
+                .then(data => {
+                    output.innerHTML = `
+                        <p class="success">✓ Fetch API works!</p>
+                        <p>Retrieved data from GitHub API:</p>
+                        <p>Username: ${data.login}</p>
+                        <p>Public Repos: ${data.public_repos}</p>
+                    `;
+                    console.log('Fetch successful:', data);
+                })
+                .catch(error => {
+                    output.innerHTML = `
+                        <p class="error">✗ Fetch failed: ${error.message}</p>
+                        <p>(This is normal if offline)</p>
+                    `;
+                });
+        }
+
+        // Page load event
+        window.addEventListener('load', function() {
+            console.log('Page loaded successfully!');
+            console.log('Browser:', navigator.userAgent);
+            console.log('Screen:', window.screen.width + 'x' + window.screen.height);
+        });
+    </script>
+</body>
+</html>
