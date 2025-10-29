@@ -568,28 +568,40 @@ class BrowserMainWindow(QMainWindow):
         QMessageBox.about(self, "About", about_text)
 
     def _apply_stylesheet(self):
-        """Apply application stylesheet."""
+        """Apply Chrome-like application stylesheet."""
         self.setStyleSheet("""
             QMainWindow {
                 background: white;
             }
 
             QMenuBar {
-                background: #f0f0f0;
-                border-bottom: 1px solid #d0d0d0;
+                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                    stop:0 #f5f5f5, stop:1 #e8e8e8);
+                border-bottom: 1px solid #c0c0c0;
+                color: #202124;
+                font-size: 13px;
             }
 
             QMenuBar::item {
-                padding: 6px 12px;
+                padding: 6px 14px;
+                border-radius: 4px;
+                margin: 2px;
             }
 
             QMenuBar::item:selected {
-                background: #e0e0e0;
+                background: rgba(95,99,104,0.1);
+            }
+
+            QMenuBar::item:pressed {
+                background: rgba(95,99,104,0.2);
             }
 
             QStatusBar {
-                background: #f0f0f0;
-                border-top: 1px solid #d0d0d0;
+                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                    stop:0 #f5f5f5, stop:1 #e8e8e8);
+                border-top: 1px solid #c0c0c0;
+                color: #5f6368;
+                font-size: 12px;
             }
         """)
 

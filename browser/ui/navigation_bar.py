@@ -257,54 +257,97 @@ class NavigationBar(QToolBar):
         self.url_bar.selectAll()
 
     def _apply_stylesheet(self):
-        """Apply custom stylesheet."""
+        """Apply Chrome-like stylesheet."""
         self.setStyleSheet("""
             QToolBar {
-                background: #f0f0f0;
+                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                    stop:0 #f5f5f5, stop:1 #e8e8e8);
                 border: none;
-                border-bottom: 1px solid #d0d0d0;
-                spacing: 3px;
-                padding: 5px;
+                border-bottom: 1px solid #c0c0c0;
+                spacing: 4px;
+                padding: 8px 12px;
+                min-height: 45px;
             }
 
             QLineEdit {
-                border: 1px solid #c0c0c0;
-                border-radius: 4px;
-                padding: 6px 10px;
+                border: 1px solid #d0d0d0;
+                border-radius: 20px;
+                padding: 8px 16px 8px 12px;
                 background: white;
-                selection-background-color: #4a90e2;
+                selection-background-color: #1a73e8;
+                font-size: 14px;
+                color: #202124;
+            }
+
+            QLineEdit:hover {
+                border: 1px solid #b0b0b0;
+                box-shadow: 0 1px 2px rgba(0,0,0,0.1);
             }
 
             QLineEdit:focus {
-                border: 1px solid #4a90e2;
+                border: 1px solid #1a73e8;
+                background: white;
+                box-shadow: 0 1px 6px rgba(26,115,232,0.3);
             }
 
             QPushButton, QToolButton {
                 border: none;
-                border-radius: 4px;
-                padding: 6px 10px;
+                border-radius: 18px;
+                padding: 8px;
                 background: transparent;
-                font-size: 16px;
+                font-size: 18px;
+                color: #5f6368;
+                min-width: 36px;
+                min-height: 36px;
             }
 
             QPushButton:hover, QToolButton:hover {
-                background: #e0e0e0;
+                background: rgba(95,99,104,0.1);
             }
 
             QPushButton:pressed, QToolButton:pressed {
-                background: #d0d0d0;
+                background: rgba(95,99,104,0.2);
             }
 
-            QPushButton:disabled {
-                color: #a0a0a0;
+            QPushButton:disabled, QToolButton:disabled {
+                color: #c0c0c0;
             }
 
             QProgressBar {
                 border: none;
-                background: #f0f0f0;
+                background: transparent;
+                height: 2px;
             }
 
             QProgressBar::chunk {
-                background: #4a90e2;
+                background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+                    stop:0 #1a73e8, stop:1 #34a853);
+            }
+
+            QLabel {
+                color: #5f6368;
+                font-size: 16px;
+            }
+
+            QMenu {
+                background: white;
+                border: 1px solid #dadce0;
+                border-radius: 8px;
+                padding: 8px 0;
+            }
+
+            QMenu::item {
+                padding: 8px 32px 8px 16px;
+                color: #202124;
+            }
+
+            QMenu::item:selected {
+                background: #f1f3f4;
+            }
+
+            QMenu::separator {
+                height: 1px;
+                background: #dadce0;
+                margin: 8px 0;
             }
         """)

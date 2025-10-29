@@ -203,61 +203,77 @@ class BrowserTabWidget(QTabWidget):
             self.setCurrentIndex(self.count() - 1)
 
     def _apply_stylesheet(self):
-        """Apply custom stylesheet."""
+        """Apply Chrome-like stylesheet."""
         self.setStyleSheet("""
             QTabWidget::pane {
                 border: none;
                 background: white;
+                top: -1px;
             }
 
             QTabWidget::tab-bar {
                 alignment: left;
             }
 
+            QTabBar {
+                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                    stop:0 #e8eaed, stop:1 #dadce0);
+                border-bottom: 1px solid #c0c0c0;
+            }
+
             QTabBar::tab {
-                background: #e0e0e0;
+                background: #dadce0;
                 border: none;
-                border-top-left-radius: 4px;
-                border-top-right-radius: 4px;
-                padding: 8px 12px;
-                margin-right: 2px;
-                min-width: 100px;
-                max-width: 200px;
+                border-top-left-radius: 8px;
+                border-top-right-radius: 8px;
+                padding: 10px 16px 10px 16px;
+                margin-right: 1px;
+                margin-top: 4px;
+                min-width: 120px;
+                max-width: 240px;
+                color: #5f6368;
             }
 
             QTabBar::tab:selected {
                 background: white;
+                color: #202124;
+                font-weight: 500;
             }
 
             QTabBar::tab:hover:!selected {
-                background: #f0f0f0;
+                background: #e8eaed;
             }
 
             QTabBar::close-button {
-                image: url(none);
+                image: none;
                 subcontrol-position: right;
                 margin-right: 4px;
+                border-radius: 10px;
+                width: 20px;
+                height: 20px;
             }
 
             QTabBar::close-button:hover {
-                background: #d0d0d0;
-                border-radius: 2px;
+                background: rgba(95,99,104,0.2);
             }
 
             QPushButton {
-                border: 1px solid #c0c0c0;
-                border-radius: 4px;
-                background: white;
-                font-size: 18px;
+                border: none;
+                border-radius: 18px;
+                background: transparent;
+                font-size: 20px;
                 font-weight: bold;
+                color: #5f6368;
+                min-width: 36px;
+                min-height: 36px;
             }
 
             QPushButton:hover {
-                background: #f0f0f0;
+                background: rgba(95,99,104,0.1);
             }
 
             QPushButton:pressed {
-                background: #e0e0e0;
+                background: rgba(95,99,104,0.2);
             }
         """)
 

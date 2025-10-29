@@ -259,51 +259,78 @@ class DevToolsPanel(QWidget):
         """Apply custom stylesheet."""
         self.setStyleSheet("""
             QWidget {
-                background: white;
+                background: #f9f9f9;
             }
 
             QTabWidget::pane {
-                border: 1px solid #c0c0c0;
+                border: 1px solid #dadce0;
                 background: white;
             }
 
+            QTabBar {
+                background: #f1f3f4;
+            }
+
             QTabBar::tab {
-                background: #e0e0e0;
-                border: 1px solid #c0c0c0;
-                padding: 6px 12px;
-                margin-right: 2px;
+                background: #f1f3f4;
+                border: none;
+                border-right: 1px solid #dadce0;
+                padding: 8px 16px;
+                color: #5f6368;
             }
 
             QTabBar::tab:selected {
                 background: white;
-                border-bottom: none;
+                color: #1a73e8;
+                border-bottom: 2px solid #1a73e8;
+            }
+
+            QTabBar::tab:hover:!selected {
+                background: #e8eaed;
             }
 
             QTextEdit {
-                border: 1px solid #c0c0c0;
-                border-radius: 3px;
-                padding: 5px;
-                background: #fafafa;
-                font-family: 'Courier New', monospace;
+                border: 1px solid #dadce0;
+                border-radius: 4px;
+                padding: 8px;
+                background: #ffffff;
+                font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+                font-size: 12px;
+                color: #202124;
             }
 
             QTreeWidget, QTableWidget {
-                border: 1px solid #c0c0c0;
+                border: 1px solid #dadce0;
                 background: white;
+                alternate-background-color: #f8f9fa;
+                gridline-color: #e8eaed;
+            }
+
+            QHeaderView::section {
+                background: #f1f3f4;
+                padding: 6px 8px;
+                border: none;
+                border-right: 1px solid #dadce0;
+                border-bottom: 1px solid #dadce0;
+                color: #5f6368;
+                font-weight: 500;
             }
 
             QPushButton {
-                border: 1px solid #c0c0c0;
-                border-radius: 3px;
-                padding: 6px 12px;
-                background: #f0f0f0;
+                border: 1px solid #dadce0;
+                border-radius: 4px;
+                padding: 6px 16px;
+                background: white;
+                color: #1a73e8;
+                font-weight: 500;
             }
 
             QPushButton:hover {
-                background: #e0e0e0;
+                background: #f8f9fa;
+                border-color: #1a73e8;
             }
 
             QPushButton:pressed {
-                background: #d0d0d0;
+                background: #e8f0fe;
             }
         """)
