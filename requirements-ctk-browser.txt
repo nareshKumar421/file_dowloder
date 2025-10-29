@@ -1,0 +1,15 @@
+# CustomTkinter Browser Requirements
+# Modern, beautiful web browser built with CustomTkinter
+
+# GUI Framework
+customtkinter>=5.2.0
+
+# Web rendering engine (uses native webview: Edge on Windows, WebKit on Mac/Linux)
+pywebview>=4.4.0
+
+# Optional: Enhanced web features
+# Uncomment if you want CEF (Chromium Embedded Framework) support
+# cefpython3>=66.1
+
+# System integration
+typing-extensions>=4.8.0
