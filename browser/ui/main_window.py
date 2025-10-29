@@ -568,7 +568,7 @@ class BrowserMainWindow(QMainWindow):
         QMessageBox.about(self, "About", about_text)
 
     def _apply_stylesheet(self):
-        """Apply Chrome-like application stylesheet."""
+        """Apply premium Chrome-exact application stylesheet with polish."""
         self.setStyleSheet("""
             QMainWindow {
                 background: white;
@@ -576,32 +576,84 @@ class BrowserMainWindow(QMainWindow):
 
             QMenuBar {
                 background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                    stop:0 #f5f5f5, stop:1 #e8e8e8);
-                border-bottom: 1px solid #c0c0c0;
+                    stop:0 #f2f2f2, stop:0.5 #ececec, stop:1 #e5e5e5);
+                border-bottom: 1px solid #bbbbbe;
                 color: #202124;
                 font-size: 13px;
+                font-family: 'Segoe UI', Arial, sans-serif;
+                padding: 2px;
             }
 
             QMenuBar::item {
-                padding: 6px 14px;
-                border-radius: 4px;
-                margin: 2px;
+                padding: 7px 16px;
+                border-radius: 5px;
+                margin: 3px 2px;
             }
 
             QMenuBar::item:selected {
-                background: rgba(95,99,104,0.1);
+                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                    stop:0 rgba(95,99,104,0.08), stop:1 rgba(95,99,104,0.12));
             }
 
             QMenuBar::item:pressed {
-                background: rgba(95,99,104,0.2);
+                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                    stop:0 rgba(95,99,104,0.15), stop:1 rgba(95,99,104,0.22));
             }
 
             QStatusBar {
                 background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                    stop:0 #f5f5f5, stop:1 #e8e8e8);
-                border-top: 1px solid #c0c0c0;
+                    stop:0 #f2f2f2, stop:0.5 #ececec, stop:1 #e5e5e5);
+                border-top: 1px solid #bbbbbe;
                 color: #5f6368;
                 font-size: 12px;
+                font-family: 'Segoe UI', Arial, sans-serif;
+                padding: 4px 8px;
+            }
+
+            QDialog {
+                background: white;
+            }
+
+            QListWidget {
+                border: 1px solid #dadce0;
+                border-radius: 8px;
+                background: white;
+                outline: none;
+            }
+
+            QListWidget::item {
+                padding: 12px;
+                border-bottom: 1px solid #e8eaed;
+            }
+
+            QListWidget::item:hover {
+                background: #f8f9fa;
+            }
+
+            QListWidget::item:selected {
+                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                    stop:0 #e8f0fe, stop:1 #d2e3fc);
+                color: #1a73e8;
+            }
+
+            QDialogButtonBox QPushButton {
+                padding: 8px 24px;
+                border-radius: 6px;
+                border: 1px solid #dadce0;
+                background: white;
+                color: #1a73e8;
+                font-weight: 500;
+                font-size: 14px;
+                min-width: 80px;
+            }
+
+            QDialogButtonBox QPushButton:hover {
+                background: #f8f9fa;
+                border-color: #1a73e8;
+            }
+
+            QDialogButtonBox QPushButton:pressed {
+                background: #e8f0fe;
             }
         """)
 

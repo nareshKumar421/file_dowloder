@@ -257,97 +257,109 @@ class NavigationBar(QToolBar):
         self.url_bar.selectAll()
 
     def _apply_stylesheet(self):
-        """Apply Chrome-like stylesheet."""
+        """Apply premium Chrome-exact stylesheet with enhanced polish."""
         self.setStyleSheet("""
             QToolBar {
                 background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                    stop:0 #f5f5f5, stop:1 #e8e8e8);
+                    stop:0 #f2f2f2, stop:0.5 #ececec, stop:1 #e5e5e5);
                 border: none;
-                border-bottom: 1px solid #c0c0c0;
-                spacing: 4px;
-                padding: 8px 12px;
-                min-height: 45px;
+                border-bottom: 1px solid #bbbbbe;
+                spacing: 5px;
+                padding: 10px 14px 8px 14px;
+                min-height: 48px;
             }
 
             QLineEdit {
-                border: 1px solid #d0d0d0;
-                border-radius: 20px;
-                padding: 8px 16px 8px 12px;
-                background: white;
+                border: 1px solid #d4d4d4;
+                border-radius: 22px;
+                padding: 9px 18px 9px 40px;
+                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                    stop:0 white, stop:1 #fafafa);
                 selection-background-color: #1a73e8;
                 font-size: 14px;
+                font-family: 'Segoe UI', Arial, sans-serif;
                 color: #202124;
             }
 
             QLineEdit:hover {
-                border: 1px solid #b0b0b0;
-                box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+                border: 1px solid #b8b8b8;
+                background: white;
             }
 
             QLineEdit:focus {
-                border: 1px solid #1a73e8;
+                border: 2px solid #1a73e8;
                 background: white;
-                box-shadow: 0 1px 6px rgba(26,115,232,0.3);
+                padding: 8px 17px 8px 39px;
             }
 
             QPushButton, QToolButton {
                 border: none;
-                border-radius: 18px;
-                padding: 8px;
+                border-radius: 50%;
+                padding: 9px;
                 background: transparent;
-                font-size: 18px;
+                font-size: 19px;
                 color: #5f6368;
-                min-width: 36px;
-                min-height: 36px;
+                min-width: 38px;
+                min-height: 38px;
+                max-width: 38px;
+                max-height: 38px;
+                font-weight: 400;
             }
 
-            QPushButton:hover, QToolButton:hover {
-                background: rgba(95,99,104,0.1);
+            QPushButton:hover:!disabled, QToolButton:hover:!disabled {
+                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                    stop:0 rgba(95,99,104,0.08), stop:1 rgba(95,99,104,0.12));
             }
 
             QPushButton:pressed, QToolButton:pressed {
-                background: rgba(95,99,104,0.2);
+                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                    stop:0 rgba(95,99,104,0.15), stop:1 rgba(95,99,104,0.20));
             }
 
             QPushButton:disabled, QToolButton:disabled {
-                color: #c0c0c0;
+                color: #c8c8c8;
+                background: transparent;
             }
 
             QProgressBar {
                 border: none;
                 background: transparent;
-                height: 2px;
+                height: 3px;
             }
 
             QProgressBar::chunk {
                 background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
-                    stop:0 #1a73e8, stop:1 #34a853);
+                    stop:0 #1a73e8, stop:0.3 #4285f4, stop:0.6 #34a853, stop:1 #fbbc04);
+                border-radius: 2px;
             }
 
             QLabel {
                 color: #5f6368;
-                font-size: 16px;
+                font-size: 17px;
+                padding: 0px 2px;
             }
 
             QMenu {
                 background: white;
                 border: 1px solid #dadce0;
-                border-radius: 8px;
-                padding: 8px 0;
+                border-radius: 10px;
+                padding: 10px 0;
             }
 
             QMenu::item {
-                padding: 8px 32px 8px 16px;
+                padding: 10px 40px 10px 20px;
                 color: #202124;
+                font-size: 14px;
             }
 
             QMenu::item:selected {
-                background: #f1f3f4;
+                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                    stop:0 #f5f5f5, stop:1 #ebebeb);
             }
 
             QMenu::separator {
                 height: 1px;
-                background: #dadce0;
-                margin: 8px 0;
+                background: #e8eaed;
+                margin: 10px 0;
             }
         """)

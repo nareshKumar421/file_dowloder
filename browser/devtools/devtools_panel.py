@@ -256,81 +256,93 @@ class DevToolsPanel(QWidget):
         self.log_console(formatted_msg, msg_type)
 
     def _apply_stylesheet(self):
-        """Apply custom stylesheet."""
+        """Apply premium Chrome DevTools stylesheet with polish."""
         self.setStyleSheet("""
             QWidget {
-                background: #f9f9f9;
+                background: #f8f9fa;
             }
 
             QTabWidget::pane {
-                border: 1px solid #dadce0;
+                border: 1px solid #d0d0d0;
+                border-top: none;
                 background: white;
             }
 
             QTabBar {
-                background: #f1f3f4;
+                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                    stop:0 #f0f1f2, stop:1 #e8e9ea);
+                border-bottom: 1px solid #d0d0d0;
             }
 
             QTabBar::tab {
-                background: #f1f3f4;
+                background: transparent;
                 border: none;
                 border-right: 1px solid #dadce0;
-                padding: 8px 16px;
+                padding: 10px 18px;
                 color: #5f6368;
+                font-size: 13px;
+                font-family: 'Segoe UI', Arial, sans-serif;
             }
 
             QTabBar::tab:selected {
                 background: white;
-                color: #1a73e8;
-                border-bottom: 2px solid #1a73e8;
+                color: #1967d2;
+                border-bottom: 3px solid #1967d2;
+                font-weight: 500;
             }
 
             QTabBar::tab:hover:!selected {
-                background: #e8eaed;
+                background: rgba(95,99,104,0.06);
             }
 
             QTextEdit {
-                border: 1px solid #dadce0;
-                border-radius: 4px;
-                padding: 8px;
+                border: 1px solid #d8d9da;
+                border-radius: 6px;
+                padding: 10px;
                 background: #ffffff;
-                font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+                font-family: 'Consolas', 'SF Mono', 'Monaco', 'Courier New', monospace;
                 font-size: 12px;
                 color: #202124;
+                line-height: 1.5;
             }
 
             QTreeWidget, QTableWidget {
-                border: 1px solid #dadce0;
+                border: 1px solid #d8d9da;
+                border-radius: 4px;
                 background: white;
                 alternate-background-color: #f8f9fa;
                 gridline-color: #e8eaed;
             }
 
             QHeaderView::section {
-                background: #f1f3f4;
-                padding: 6px 8px;
+                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                    stop:0 #f4f5f6, stop:1 #ececed);
+                padding: 8px 10px;
                 border: none;
                 border-right: 1px solid #dadce0;
-                border-bottom: 1px solid #dadce0;
+                border-bottom: 1px solid #d0d0d0;
                 color: #5f6368;
-                font-weight: 500;
+                font-weight: 600;
+                font-size: 12px;
             }
 
             QPushButton {
-                border: 1px solid #dadce0;
-                border-radius: 4px;
-                padding: 6px 16px;
+                border: 1px solid #d0d0d0;
+                border-radius: 6px;
+                padding: 8px 20px;
                 background: white;
-                color: #1a73e8;
+                color: #1967d2;
                 font-weight: 500;
+                font-size: 13px;
             }
 
             QPushButton:hover {
                 background: #f8f9fa;
-                border-color: #1a73e8;
+                border-color: #1967d2;
             }
 
             QPushButton:pressed {
-                background: #e8f0fe;
+                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                    stop:0 #e8f0fe, stop:1 #d2e3fc);
             }
         """)
