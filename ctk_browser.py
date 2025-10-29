@@ -5,67 +5,14 @@ Built with CustomTkinter and pywebview
 
 import customtkinter as ctk
 import webview
-import threading
 import json
-import os
 from datetime import datetime
 from typing import List, Dict
-import webbrowser
 from pathlib import Path
 
 # Configure CustomTkinter
 ctk.set_appearance_mode("dark")  # Modes: "dark", "light", "system"
 ctk.set_default_color_theme("blue")  # Themes: "blue", "green", "dark-blue"
-
-
-class BrowserTab:
-    """Represents a single browser tab with webview"""
-
-    def __init__(self, url: str = "https://www.google.com"):
-        self.url = url
-        self.title = "New Tab"
-        self.window = None
-        self.webview_ready = False
-
-    def create_webview(self, parent_window):
-        """Create the webview window"""
-        self.window = webview.create_window(
-            self.title,
-            self.url,
-            width=1200,
-            height=800,
-            resizable=True,
-            fullscreen=False,
-            hidden=False
-        )
-        return self.window
-
-    def navigate(self, url: str):
-        """Navigate to a URL"""
-        if not url.startswith(('http://', 'https://')):
-            if '.' in url:
-                url = 'https://' + url
-            else:
-                # Search query
-                url = f'https://www.google.com/search?q={url}'
-        self.url = url
-        if self.window:
-            self.window.load_url(url)
-
-    def reload(self):
-        """Reload current page"""
-        if self.window:
-            self.window.load_url(self.url)
-
-    def go_back(self):
-        """Go back in history"""
-        if self.window:
-            self.window.evaluate_js('window.history.back()')
-
-    def go_forward(self):
-        """Go forward in history"""
-        if self.window:
-            self.window.evaluate_js('window.history.forward()')
 
 
 class BookmarkManager:
@@ -167,15 +114,17 @@ class CTKBrowser(ctk.CTk):
         self.bookmark_manager = BookmarkManager()
         self.history_manager = HistoryManager()
 
-        # Current tab
-        self.current_tab: BrowserTab = None
-        self.tabs: List[BrowserTab] = []
+        # Current URL
+        self.current_url = "https://www.google.com"
+
+        # Webview window reference
+        self.webview_window = None
 
         # Setup UI
         self.setup_ui()
 
-        # Create first tab
-        self.create_new_tab()
+        # Create webview after a short delay
+        self.after(100, self.create_webview)
 
     def setup_ui(self):
         """Setup the user interface"""
@@ -256,6 +205,7 @@ class CTKBrowser(ctk.CTk):
         )
         self.address_bar.grid(row=0, column=0, sticky="ew", padx=(0, 5))
         self.address_bar.bind("<Return>", lambda e: self.navigate_to_url())
+        self.address_bar.insert(0, self.current_url)
 
         # Go button
         self.go_btn = ctk.CTkButton(
@@ -344,7 +294,7 @@ class CTKBrowser(ctk.CTk):
         # Info label
         self.info_label = ctk.CTkLabel(
             self.content_frame,
-            text="🌐 Browser Window Will Open in Separate Window\n\nUse the navigation bar above to control the browser",
+            text="🌐 Browser Window Opening...\n\nUse the navigation bar above to control the browser\n\nClick + to open additional browser windows",
             font=("Arial", 16),
             text_color="#7f8c8d"
         )
@@ -356,75 +306,114 @@ class CTKBrowser(ctk.CTk):
 
         self.status_label = ctk.CTkLabel(
             self.status_bar,
-            text="Ready",
+            text="Ready - Browser window will open shortly...",
             font=("Arial", 12),
             anchor="w"
         )
         self.status_label.pack(side="left", padx=10, pady=5)
 
+    def create_webview(self):
+        """Create the main webview window"""
+        # Create window
+        self.webview_window = webview.create_window(
+            'CTK Browser',
+            self.current_url,
+            width=1200,
+            height=800,
+            resizable=True
+        )
+
+        # Start webview (this blocks until window is closed)
+        self.status_label.configure(text="Browser window opened!")
+        webview.start()
+
     def create_new_tab(self):
-        """Create a new browser tab"""
-        tab = BrowserTab()
-        self.tabs.append(tab)
-        self.current_tab = tab
+        """Create a new browser window"""
+        # Create a new window with current or default URL
+        url = self.address_bar.get().strip() or "https://www.google.com"
+        if not url.startswith(('http://', 'https://')):
+            if '.' in url:
+                url = 'https://' + url
+            else:
+                url = f'https://www.google.com/search?q={url}'
 
-        # Start webview in separate thread
-        def start_webview():
-            window = tab.create_webview(self)
-            webview.start(debug=False)
+        # Create new window
+        webview.create_window(
+            'CTK Browser - New Window',
+            url,
+            width=1200,
+            height=800,
+            resizable=True
+        )
 
-        thread = threading.Thread(target=start_webview, daemon=True)
-        thread.start()
-
-        self.update_ui()
-        self.status_label.configure(text=f"New tab opened - Total tabs: {len(self.tabs)}")
+        self.status_label.configure(text=f"New browser window opened!")
 
     def navigate_to_url(self):
         """Navigate to URL from address bar"""
         url = self.address_bar.get().strip()
-        if url and self.current_tab:
-            self.current_tab.navigate(url)
-            self.history_manager.add_entry(url, url)
-            self.update_ui()
-            self.status_label.configure(text=f"Navigating to: {url}")
+        if url:
+            # Process URL
+            if not url.startswith(('http://', 'https://')):
+                if '.' in url:
+                    url = 'https://' + url
+                else:
+                    url = f'https://www.google.com/search?q={url}'
+
+            self.current_url = url
+
+            # Load URL in webview
+            if self.webview_window:
+                self.webview_window.load_url(url)
+                self.history_manager.add_entry(url, url)
+                self.status_label.configure(text=f"Navigating to: {url}")
+            else:
+                self.status_label.configure(text="Browser window not ready yet...")
 
     def go_back(self):
         """Go back in history"""
-        if self.current_tab:
-            self.current_tab.go_back()
+        if self.webview_window:
+            self.webview_window.evaluate_js('window.history.back()')
             self.status_label.configure(text="Going back...")
+        else:
+            self.status_label.configure(text="Browser window not ready yet...")
 
     def go_forward(self):
         """Go forward in history"""
-        if self.current_tab:
-            self.current_tab.go_forward()
+        if self.webview_window:
+            self.webview_window.evaluate_js('window.history.forward()')
             self.status_label.configure(text="Going forward...")
+        else:
+            self.status_label.configure(text="Browser window not ready yet...")
 
     def reload_page(self):
         """Reload current page"""
-        if self.current_tab:
-            self.current_tab.reload()
+        if self.webview_window:
+            self.webview_window.evaluate_js('window.location.reload()')
             self.status_label.configure(text="Reloading page...")
+        else:
+            self.status_label.configure(text="Browser window not ready yet...")
 
     def go_home(self):
         """Go to home page"""
-        if self.current_tab:
-            self.current_tab.navigate("https://www.google.com")
-            self.address_bar.delete(0, "end")
-            self.address_bar.insert(0, "https://www.google.com")
+        self.current_url = "https://www.google.com"
+        self.address_bar.delete(0, "end")
+        self.address_bar.insert(0, self.current_url)
+        if self.webview_window:
+            self.webview_window.load_url(self.current_url)
             self.status_label.configure(text="Going home...")
+        else:
+            self.status_label.configure(text="Browser window not ready yet...")
 
     def toggle_bookmark(self):
         """Toggle bookmark for current page"""
-        if not self.current_tab:
+        url = self.address_bar.get().strip()
+        if not url:
             return
 
-        url = self.current_tab.url
         if self.bookmark_manager.is_bookmarked(url):
             self.bookmark_manager.remove_bookmark(url)
             self.status_label.configure(text="Bookmark removed")
         else:
-            # Show dialog to add bookmark
             self.show_add_bookmark_dialog(url)
 
     def show_add_bookmark_dialog(self, url: str):
@@ -778,15 +767,18 @@ class CTKBrowser(ctk.CTk):
         self.status_label.configure(text=f"Theme changed to {theme}. Restart to see changes.")
 
     def open_url(self, url: str, dialog=None):
-        """Open URL in current tab"""
-        if self.current_tab:
-            self.current_tab.navigate(url)
-            self.address_bar.delete(0, "end")
-            self.address_bar.insert(0, url)
+        """Open URL in current window"""
+        self.address_bar.delete(0, "end")
+        self.address_bar.insert(0, url)
+        self.current_url = url
+
+        if self.webview_window:
+            self.webview_window.load_url(url)
             self.history_manager.add_entry(url, url)
             self.status_label.configure(text=f"Opening: {url}")
-            if dialog:
-                dialog.destroy()
+
+        if dialog:
+            dialog.destroy()
 
     def delete_bookmark(self, url: str, dialog):
         """Delete a bookmark"""
@@ -801,12 +793,6 @@ class CTKBrowser(ctk.CTk):
         self.status_label.configure(text="History cleared")
         dialog.destroy()
         self.show_history()  # Refresh list
-
-    def update_ui(self):
-        """Update UI elements"""
-        if self.current_tab:
-            self.address_bar.delete(0, "end")
-            self.address_bar.insert(0, self.current_tab.url)
 
 
 def main():
